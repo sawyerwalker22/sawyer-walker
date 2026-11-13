@@ -11,14 +11,14 @@ permalink: /
 <meta name="description" content="Sawyer Walker: applied data science graduate student at Howard University focused on business analytics and consulting.">
 <style>
   :root {
-    --navy: #14213d;
-    --navy-2: #1f3366;
-    --gold: #c9a227;
-    --ink: #1b1b1b;
-    --muted: #5a5f6b;
-    --bg: #f6f5f1;
-    --card: #ffffff;
-    --line: #e2e0d8;
+    --navy: #5c4334;      /* deep brown: headings, nav */
+    --navy-2: #7a5c48;    /* medium brown: links */
+    --gold: #b89273;      /* tan accent */
+    --ink: #3b2f27;
+    --muted: #8a7666;
+    --bg: #f7f2ec;
+    --card: #fffcf8;
+    --line: #e6dbcf;
   }
   * { box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -36,34 +36,34 @@ permalink: /
   /* Nav */
   nav {
     position: sticky; top: 0; z-index: 10;
-    background: rgba(20, 33, 61, 0.97);
+    background: rgba(92, 67, 52, 0.97);
     color: #fff;
   }
   nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 60px; }
   nav .brand { font-weight: bold; letter-spacing: 0.5px; color: #fff; text-decoration: none; }
-  nav .links a { color: #e8e8e8; text-decoration: none; margin-left: 22px; font-size: 15px; }
-  nav .links a:hover { color: var(--gold); }
-  nav .links a.resume-link { color: var(--gold); font-weight: bold; }
+  nav .links a { color: #efe6dc; text-decoration: none; margin-left: 22px; font-size: 15px; }
+  nav .links a:hover { color: #e3cdb6; }
+  nav .links a.resume-link { color: #e3cdb6; font-weight: bold; }
 
   /* Hero */
   .hero {
-    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
-    color: #fff;
+    background: linear-gradient(135deg, #efe4d6 0%, #dcc6ad 100%);
+    color: var(--ink);
     padding: 84px 0 72px;
   }
-  .hero .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-size: 14px; margin: 0 0 10px; }
-  .hero h1 { font-size: 52px; line-height: 1.1; margin: 0 0 14px; }
-  .hero .tagline { font-size: 21px; max-width: 680px; color: #dfe3ee; margin: 0 0 30px; }
+  .hero .eyebrow { color: var(--navy-2); text-transform: uppercase; letter-spacing: 2px; font-size: 14px; margin: 0 0 10px; }
+  .hero h1 { font-size: 52px; line-height: 1.1; margin: 0 0 14px; color: var(--navy); }
+  .hero .tagline { font-size: 21px; max-width: 680px; color: #4e3f35; margin: 0 0 30px; }
   .btns { display: flex; flex-wrap: wrap; gap: 12px; }
   .btn {
     display: inline-block; padding: 12px 22px; border-radius: 6px;
     text-decoration: none; font-size: 16px; font-weight: bold;
     border: 2px solid var(--gold);
   }
-  .btn-primary { background: var(--gold); color: var(--navy); }
-  .btn-primary:hover { background: #ddb73a; }
-  .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.6); }
-  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-primary { background: var(--navy); color: #fffcf8; border-color: var(--navy); }
+  .btn-primary:hover { background: var(--navy-2); border-color: var(--navy-2); }
+  .btn-ghost { color: var(--navy); border-color: var(--navy); background: transparent; }
+  .btn-ghost:hover { background: rgba(92,67,52,0.08); }
 
   /* Stats strip */
   .stats { background: var(--card); border-bottom: 1px solid var(--line); }
@@ -89,13 +89,13 @@ permalink: /
   section:not(.alt) .card { background: var(--card); }
   .card .icon { font-size: 28px; }
   .card h3 { margin: 8px 0 6px; font-size: 19px; color: var(--navy); }
-  .card p { margin: 0; font-size: 16px; color: #333; }
+  .card p { margin: 0; font-size: 16px; color: #4e3f35; }
 
   .project { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: 10px; padding: 26px 28px; }
   .project .tag { display: inline-block; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 4px; }
   .project h3 { margin: 0 0 10px; font-size: 22px; color: var(--navy); }
   .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
-  .pills li { background: #eef0f6; color: var(--navy-2); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
+  .pills li { background: #efe5da; color: var(--navy-2); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
 
   /* Timeline */
   .timeline { position: relative; margin-left: 8px; padding-left: 28px; border-left: 2px solid var(--line); }
@@ -115,12 +115,12 @@ permalink: /
   .skill-group h3 { font-size: 16px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin: 0 0 8px; }
 
   /* Contact */
-  .contact { background: var(--navy); color: #fff; text-align: center; }
-  .contact h2 { color: #fff; }
+  .contact { background: #e9dccb; color: var(--ink); text-align: center; }
+  .contact h2 { color: var(--navy); }
   .contact .rule { margin: 0 auto 24px; }
-  .contact p { color: #dfe3ee; max-width: 620px; margin: 0 auto 26px; }
+  .contact p { color: #4e3f35; max-width: 620px; margin: 0 auto 26px; }
   .contact .btns { justify-content: center; }
-  footer { background: #0e1830; color: #9aa3b8; text-align: center; font-size: 14px; padding: 18px 0; }
+  footer { background: var(--navy); color: #e3d6c8; text-align: center; font-size: 14px; padding: 18px 0; }
 
   /* Responsive */
   @media (max-width: 860px) {
@@ -162,7 +162,7 @@ permalink: /
     <h1>Hi, I'm Sawyer Walker.</h1>
     <p class="tagline">I'm an applied data science graduate student at Howard University who turns data into clear, confident business decisions.</p>
     <div class="btns">
-      <a class="btn btn-primary" href="resume/">📄 View My Resume</a>
+      <a class="btn btn-primary" href="resume/">View My Resume</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/sawyer-walker-a5668323b">LinkedIn</a>
       <a class="btn btn-ghost" href="https://github.com/sawyerwalker22">GitHub</a>
     </div>
@@ -192,11 +192,11 @@ permalink: /
       <aside class="fact-card">
         <h3>Quick Facts</h3>
         <ul>
-          <li>🎓 M.S., Applied Data Science &amp; Analytics, Howard University (2026)</li>
-          <li>📚 B.A., Sociology, Xavier University (2024)</li>
-          <li>📍 Based in Delaware / Washington, D.C.</li>
-          <li>🥍 NEC 2nd Team All-Conference &amp; 2025 team MVP</li>
-          <li>📖 Interests: reading, research, youth lacrosse coaching</li>
+          <li>M.S., Applied Data Science &amp; Analytics, Howard University (2026)</li>
+          <li>B.A., Sociology, Xavier University (2024)</li>
+          <li>Based in Delaware / Washington, D.C.</li>
+          <li>NEC 2nd Team All-Conference &amp; 2025 team MVP</li>
+          <li>Interests: reading, research, youth lacrosse coaching</li>
         </ul>
       </aside>
     </div>
@@ -209,17 +209,14 @@ permalink: /
     <div class="rule"></div>
     <div class="cards">
       <div class="card">
-        <div class="icon">📊</div>
         <h3>Analytics</h3>
         <p>Cleaning, exploring and modeling data in Python, R and SQL to find what's actually driving the numbers.</p>
       </div>
       <div class="card">
-        <div class="icon">💡</div>
         <h3>Business Insight</h3>
         <p>Framing the right question first, then connecting results to the decisions leaders need to make.</p>
       </div>
       <div class="card">
-        <div class="icon">🗣️</div>
         <h3>Data Storytelling</h3>
         <p>Turning findings into clear visuals in Tableau, Power BI and Flourish that non-technical audiences understand.</p>
       </div>
@@ -310,7 +307,7 @@ permalink: /
     <div class="rule"></div>
     <p>I'm looking for opportunities in business analytics and data-driven consulting. I'd love to hear from you.</p>
     <div class="btns">
-      <a class="btn btn-primary" href="mailto:sawyer.renee112@hotmail.com">✉️ Email Me</a>
+      <a class="btn btn-primary" href="mailto:sawyer.renee112@hotmail.com">Email Me</a>
       <a class="btn btn-ghost" href="resume/">Resume</a>
       <a class="btn btn-ghost" href="https://www.linkedin.com/in/sawyer-walker-a5668323b">LinkedIn</a>
       <a class="btn btn-ghost" href="https://github.com/sawyerwalker22">GitHub</a>

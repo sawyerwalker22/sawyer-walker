@@ -5,7 +5,7 @@ description: "Data Science Student | Business Analytics & Consulting"
 # Theme option 1: Minima (shows a "Resume" link in the top nav bar automatically)
 theme: minima
 header_pages:
-  - resume.md
+  - resume.html
 
 # Theme option 2: Cayman (swap with the lines above if you prefer it; uses the .btn button style)
 # remote_theme: pages-themes/cayman@v0.2.0

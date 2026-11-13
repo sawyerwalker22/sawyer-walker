@@ -1,0 +1,324 @@
+---
+layout: null
+permalink: /
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sawyer Walker | Data Science & Business Analytics</title>
+<meta name="description" content="Sawyer Walker: applied data science graduate student at Howard University focused on business analytics and consulting.">
+<style>
+  :root {
+    --navy: #14213d;
+    --navy-2: #1f3366;
+    --gold: #c9a227;
+    --ink: #1b1b1b;
+    --muted: #5a5f6b;
+    --bg: #f6f5f1;
+    --card: #ffffff;
+    --line: #e2e0d8;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: Georgia, "Times New Roman", serif;
+    color: var(--ink);
+    background: var(--bg);
+    line-height: 1.6;
+    font-size: 17px;
+  }
+  a { color: var(--navy-2); }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(20, 33, 61, 0.97);
+    color: #fff;
+  }
+  nav .wrap { display: flex; justify-content: space-between; align-items: center; height: 60px; }
+  nav .brand { font-weight: bold; letter-spacing: 0.5px; color: #fff; text-decoration: none; }
+  nav .links a { color: #e8e8e8; text-decoration: none; margin-left: 22px; font-size: 15px; }
+  nav .links a:hover { color: var(--gold); }
+  nav .links a.resume-link { color: var(--gold); font-weight: bold; }
+
+  /* Hero */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, var(--navy-2) 100%);
+    color: #fff;
+    padding: 84px 0 72px;
+  }
+  .hero .eyebrow { color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-size: 14px; margin: 0 0 10px; }
+  .hero h1 { font-size: 52px; line-height: 1.1; margin: 0 0 14px; }
+  .hero .tagline { font-size: 21px; max-width: 680px; color: #dfe3ee; margin: 0 0 30px; }
+  .btns { display: flex; flex-wrap: wrap; gap: 12px; }
+  .btn {
+    display: inline-block; padding: 12px 22px; border-radius: 6px;
+    text-decoration: none; font-size: 16px; font-weight: bold;
+    border: 2px solid var(--gold);
+  }
+  .btn-primary { background: var(--gold); color: var(--navy); }
+  .btn-primary:hover { background: #ddb73a; }
+  .btn-ghost { color: #fff; border-color: rgba(255,255,255,0.6); }
+  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* Stats strip */
+  .stats { background: var(--card); border-bottom: 1px solid var(--line); }
+  .stats .wrap { display: grid; grid-template-columns: repeat(4, 1fr); text-align: center; padding: 26px 24px; gap: 12px; }
+  .stat b { display: block; font-size: 26px; color: var(--navy); }
+  .stat span { font-size: 14px; color: var(--muted); }
+
+  /* Sections */
+  section { padding: 64px 0; }
+  section.alt { background: var(--card); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+  h2 { font-size: 30px; margin: 0 0 8px; color: var(--navy); }
+  .rule { width: 56px; height: 3px; background: var(--gold); margin: 0 0 28px; }
+  .lead { font-size: 18px; max-width: 760px; }
+
+  .about-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 40px; align-items: start; }
+  .fact-card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+  .fact-card h3 { margin: 0 0 10px; font-size: 18px; color: var(--navy); }
+  .fact-card ul { margin: 0; padding-left: 18px; }
+  .fact-card li { margin-bottom: 6px; font-size: 16px; }
+
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .card { background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 24px; }
+  section:not(.alt) .card { background: var(--card); }
+  .card .icon { font-size: 28px; }
+  .card h3 { margin: 8px 0 6px; font-size: 19px; color: var(--navy); }
+  .card p { margin: 0; font-size: 16px; color: #333; }
+
+  .project { background: var(--card); border: 1px solid var(--line); border-left: 5px solid var(--gold); border-radius: 10px; padding: 26px 28px; }
+  .project .tag { display: inline-block; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 4px; }
+  .project h3 { margin: 0 0 10px; font-size: 22px; color: var(--navy); }
+  .pills { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 0; padding: 0; list-style: none; }
+  .pills li { background: #eef0f6; color: var(--navy-2); border-radius: 999px; padding: 4px 12px; font-size: 14px; }
+
+  /* Timeline */
+  .timeline { position: relative; margin-left: 8px; padding-left: 28px; border-left: 2px solid var(--line); }
+  .t-item { position: relative; margin-bottom: 28px; }
+  .t-item::before {
+    content: ""; position: absolute; left: -37px; top: 6px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--gold); border: 3px solid var(--card);
+    box-shadow: 0 0 0 2px var(--gold);
+  }
+  .t-item .when { font-size: 14px; color: var(--muted); }
+  .t-item h3 { margin: 2px 0 4px; font-size: 19px; color: var(--navy); }
+  .t-item .where { font-style: italic; margin-bottom: 4px; }
+  .t-item p { margin: 0; font-size: 16px; }
+
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 18px; }
+  .skill-group h3 { font-size: 16px; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin: 0 0 8px; }
+
+  /* Contact */
+  .contact { background: var(--navy); color: #fff; text-align: center; }
+  .contact h2 { color: #fff; }
+  .contact .rule { margin: 0 auto 24px; }
+  .contact p { color: #dfe3ee; max-width: 620px; margin: 0 auto 26px; }
+  .contact .btns { justify-content: center; }
+  footer { background: #0e1830; color: #9aa3b8; text-align: center; font-size: 14px; padding: 18px 0; }
+
+  /* Responsive */
+  @media (max-width: 860px) {
+    .about-grid { grid-template-columns: 1fr; gap: 24px; }
+    .cards { grid-template-columns: 1fr; }
+    .stats .wrap { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 600px) {
+    body { font-size: 16px; }
+    nav .links a:not(.resume-link) { display: none; }
+    .hero { padding: 56px 0 48px; }
+    .hero h1 { font-size: 38px; }
+    .hero .tagline { font-size: 18px; }
+    section { padding: 48px 0; }
+    h2 { font-size: 26px; }
+    .btn { flex: 1 1 100%; text-align: center; }
+    .stat b { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">Sawyer Walker</a>
+    <div class="links">
+      <a href="#about">About</a>
+      <a href="#work">Work</a>
+      <a href="#experience">Experience</a>
+      <a href="#skills">Skills</a>
+      <a class="resume-link" href="resume/">Resume</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <p class="eyebrow">Data Science · Business Analytics · Consulting</p>
+    <h1>Hi, I'm Sawyer Walker.</h1>
+    <p class="tagline">I'm an applied data science graduate student at Howard University who turns data into clear, confident business decisions.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="resume/">📄 View My Resume</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/sawyer-walker-a5668323b">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/sawyerwalker22">GitHub</a>
+    </div>
+  </div>
+</header>
+
+<div class="stats">
+  <div class="wrap">
+    <div class="stat"><b>M.S. '26</b><span>Applied Data Science &amp; Analytics</span></div>
+    <div class="stat"><b>Python · R · SQL</b><span>Core languages</span></div>
+    <div class="stat"><b>50</b><span>Student-athletes led as president</span></div>
+    <div class="stat"><b>Team Captain</b><span>Howard Women's Lacrosse</span></div>
+  </div>
+</div>
+
+<section id="about">
+  <div class="wrap">
+    <h2>About Me</h2>
+    <div class="rule"></div>
+    <div class="about-grid">
+      <div>
+        <p class="lead">I'm a data science graduate student who wants to work in business analytics and consulting, helping organizations make better decisions with data.</p>
+        <p>To me, problem solving and analysis aren't just strengths. They're the part of the work I enjoy most. I like taking a messy question, finding the right data, and working through it until the answer is clear enough to act on.</p>
+        <p>My background in sociology taught me to ask <em>why</em> people and organizations behave the way they do. Data science gives me the tools to answer that with evidence. Leading teams on and off the lacrosse field taught me how to turn analysis into action that people actually follow.</p>
+        <p>Outside of coursework, I spend a lot of time reading and researching all kinds of topics. That curiosity carries straight into my work, because every new dataset is another chance to learn something.</p>
+      </div>
+      <aside class="fact-card">
+        <h3>Quick Facts</h3>
+        <ul>
+          <li>🎓 M.S., Applied Data Science &amp; Analytics, Howard University (2026)</li>
+          <li>📚 B.A., Sociology, Xavier University (2024)</li>
+          <li>📍 Based in Delaware / Washington, D.C.</li>
+          <li>🥍 NEC 2nd Team All-Conference &amp; 2025 team MVP</li>
+          <li>📖 Interests: reading, research, youth lacrosse coaching</li>
+        </ul>
+      </aside>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <h2>What I Bring</h2>
+    <div class="rule"></div>
+    <div class="cards">
+      <div class="card">
+        <div class="icon">📊</div>
+        <h3>Analytics</h3>
+        <p>Cleaning, exploring and modeling data in Python, R and SQL to find what's actually driving the numbers.</p>
+      </div>
+      <div class="card">
+        <div class="icon">💡</div>
+        <h3>Business Insight</h3>
+        <p>Framing the right question first, then connecting results to the decisions leaders need to make.</p>
+      </div>
+      <div class="card">
+        <div class="icon">🗣️</div>
+        <h3>Data Storytelling</h3>
+        <p>Turning findings into clear visuals in Tableau, Power BI and Flourish that non-technical audiences understand.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <h2>Featured Project</h2>
+    <div class="rule"></div>
+    <div class="project">
+      <span class="tag">Data Story · Research</span>
+      <h3>AI Dependence &amp; Data-Driven Business Decisions</h3>
+      <p>How has growing reliance on AI changed the way businesses make data-driven decisions? This project explores that question with a focus on the consulting industry, using market and industry data on AI adoption rates and consulting spending across industries over time.</p>
+      <ul class="pills">
+        <li>Research design</li>
+        <li>Market &amp; industry data</li>
+        <li>Data visualization</li>
+        <li>Consulting</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="experience">
+  <div class="wrap">
+    <h2>Experience Highlights</h2>
+    <div class="rule"></div>
+    <div class="timeline">
+      <div class="t-item">
+        <div class="when">May 2026 – July 2026</div>
+        <h3>Intern</h3>
+        <div class="where">University of Maryland, College Park, MD</div>
+        <p>Used data science research methods and co-design with Division 1 student-athletes to find data literacy gaps, and helped build a data analysis tool and coursework model that shaped new STEM curriculum.</p>
+      </div>
+      <div class="t-item">
+        <div class="when">August 2025 – May 2026</div>
+        <h3>Ambassador</h3>
+        <div class="where">Morgan's Message, Howard University</div>
+        <p>Championed ending mental health stigma among student-athletes and co-led chapter networking events.</p>
+      </div>
+      <div class="t-item">
+        <div class="when">February 2025 – April 2025</div>
+        <h3>Team Lead</h3>
+        <div class="where">Grassroots Health, Washington, D.C.</div>
+        <p>Led wellbeing programming for youth in underrepresented D.C. communities.</p>
+      </div>
+      <div class="t-item">
+        <div class="when">May 2022 – May 2024</div>
+        <h3>President</h3>
+        <div class="where">Black Student Athlete Group, Xavier University</div>
+        <p>Led a cohort of 50 student-athletes and served as the main liaison to the athletic department and DEI administration.</p>
+      </div>
+    </div>
+    <p><a href="resume/"><b>See full experience on my resume →</b></a></p>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <h2>Skills &amp; Tools</h2>
+    <div class="rule"></div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Languages</h3>
+        <ul class="pills"><li>Python</li><li>R</li><li>SQL</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Machine Learning</h3>
+        <ul class="pills"><li>Regression</li><li>Classification</li><li>Clustering</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Visualization</h3>
+        <ul class="pills"><li>Tableau</li><li>Power BI</li><li>Flourish</li></ul>
+      </div>
+      <div class="skill-group">
+        <h3>Cloud &amp; Tools</h3>
+        <ul class="pills"><li>AWS</li><li>Azure</li><li>GCP</li><li>Excel</li><li>Git</li></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <h2>Let's Connect</h2>
+    <div class="rule"></div>
+    <p>I'm looking for opportunities in business analytics and data-driven consulting. I'd love to hear from you.</p>
+    <div class="btns">
+      <a class="btn btn-primary" href="mailto:sawyer.renee112@hotmail.com">✉️ Email Me</a>
+      <a class="btn btn-ghost" href="resume/">Resume</a>
+      <a class="btn btn-ghost" href="https://www.linkedin.com/in/sawyer-walker-a5668323b">LinkedIn</a>
+      <a class="btn btn-ghost" href="https://github.com/sawyerwalker22">GitHub</a>
+    </div>
+  </div>
+</section>
+
+<footer>© 2026 Sawyer Walker</footer>
+
+</body>
+</html>

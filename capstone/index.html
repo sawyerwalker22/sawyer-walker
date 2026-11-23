@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Dependence & Data-Driven Decisions | Capstone Dashboard | Sawyer Walker</title>
+<meta name="description" content="Capstone dashboard by Sawyer Walker: how dependence on AI is changing data-driven business decisions, across jobs, business adoption, financial outcomes and data literacy.">
+<style>
+  :root {
+    --navy: #14284b;        /* brand navy: header, headings */
+    --navy-mark: #2b5c9e;   /* chart navy (validated) */
+    --red: #7d1d2c;         /* brand dark red: accents */
+    --red-mark: #a8293d;    /* chart dark red (validated) */
+    --bg: #f5f3ee;
+    --card: #fdfcfa;
+    --ink: #1f2430;
+    --ink-2: #4a4f5c;
+    --muted: #767b87;
+    --line: #e3dfd6;
+    --grid: #ebe8e1;
+    --go: #2f8a57;          /* stoplight green */
+    --caution: #d9a21b;     /* stoplight amber */
+    --stop: #c9372c;        /* stoplight red */
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif; line-height: 1.55; font-size: 16px;
+  }
+  a { color: var(--navy-mark); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+
+  /* Top bar + header */
+  .topbar { background: var(--navy); }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: center; height: 52px; }
+  .topbar a { color: #e7ebf3; text-decoration: none; font-size: 14px; margin-right: 18px; }
+  .topbar a:hover { color: #fff; text-decoration: underline; }
+  .topbar .brand { font-weight: bold; color: #fff; }
+  header.hero { background: var(--navy); color: #fff; padding: 34px 0 40px; border-bottom: 5px solid var(--red); }
+  .eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: 13px; color: #c9d3e6; margin: 0 0 8px; }
+  header.hero h1 { font-size: 36px; line-height: 1.15; margin: 0 0 16px; max-width: 900px; }
+  .rq {
+    background: rgba(255,255,255,0.08); border-left: 4px solid #d2a3ab;
+    padding: 14px 18px; border-radius: 4px; max-width: 900px; font-size: 18px; margin: 0;
+  }
+  .rq b { display: block; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #c9d3e6; margin-bottom: 4px; }
+  .byline { margin: 16px 0 0; color: #c9d3e6; font-size: 14px; }
+
+  section { padding: 36px 0 8px; }
+  h2 { color: var(--navy); font-size: 26px; margin: 0 0 4px; }
+  h2 + .rule { width: 56px; height: 3px; background: var(--red); margin: 0 0 18px; }
+  h3 { color: var(--navy); font-size: 18px; margin: 0 0 6px; }
+  .sub { color: var(--ink-2); margin: 0 0 18px; max-width: 820px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; }
+
+  .intro p { margin: 0; font-size: 17px; line-height: 1.7; max-width: 900px; }
+
+  /* Stoplight */
+  .light { display: inline-flex; flex-direction: column; gap: 5px; background: #23262d; padding: 7px 6px; border-radius: 14px; flex-shrink: 0; }
+  .light span { width: 18px; height: 18px; border-radius: 50%; background: #3d4048; }
+  .light.go span:nth-child(3) { background: var(--go); box-shadow: 0 0 8px var(--go); }
+  .light.caution span:nth-child(2) { background: var(--caution); box-shadow: 0 0 8px var(--caution); }
+  .light.stop span:nth-child(1) { background: var(--stop); box-shadow: 0 0 8px var(--stop); }
+  .badge { display: inline-block; font-size: 12px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; border: 1px solid; }
+  .badge.go { color: #1f6b41; border-color: #1f6b41; }
+  .badge.caution { color: #8a6304; border-color: #8a6304; }
+  .badge.stop { color: #a3271e; border-color: #a3271e; }
+  .badge.positive { color: var(--navy-mark); border-color: var(--navy-mark); }
+  .badge.concern { color: var(--red); border-color: var(--red); }
+
+  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tile { display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: inherit; }
+  .tile-top { display: flex; gap: 14px; align-items: flex-start; }
+  .mini { border-top: 1px solid var(--line); padding-top: 12px; margin-top: auto; }
+  .mini-title { font-size: 12.5px; font-weight: bold; color: var(--navy); margin: 0 0 6px; }
+  .tile:hover { border-color: var(--navy-mark); }
+  .tile h3 { font-size: 16px; margin: 4px 0 6px; }
+  .tile p { margin: 0; font-size: 14px; color: var(--ink-2); }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 18px; margin: 16px 0 0; font-size: 14px; color: var(--ink-2); }
+  .legend-row .item { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+  /* Area sections */
+  .area-head { display: flex; gap: 16px; align-items: center; margin-bottom: 14px; }
+  .area-head h2 { margin: 0; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+  .stat .label { font-size: 13px; color: var(--ink-2); }
+  .stat .value { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 600; font-size: 30px; color: var(--ink); line-height: 1.2; margin: 4px 0; }
+  .stat .note { font-size: 12.5px; color: var(--muted); }
+  .stat .tag { font-size: 12px; margin-bottom: 4px; }
+
+  .balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .balance .card { padding: 16px 18px; }
+  .balance h4 { margin: 0 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+  .balance ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+  .balance li { margin-bottom: 6px; }
+  .balance .pos h4 { color: var(--navy-mark); }
+  .balance .neg h4 { color: var(--red); }
+  .verdict { margin-top: 14px; font-size: 15px; background: #f0ede6; border-left: 4px solid var(--red); padding: 10px 14px; border-radius: 4px; }
+
+  /* Charts */
+  .chart-title { font-weight: bold; color: var(--navy); margin: 0 0 2px; font-size: 15.5px; }
+  .chart-sub { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+  .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart .explain { font-size: 14px; color: var(--ink-2); margin: 10px 0 0; line-height: 1.55; }
+  .chart .src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .keys { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin: 0 0 8px; flex-wrap: wrap; }
+  .keys span { display: inline-flex; align-items: center; gap: 6px; }
+  .keys i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  details.table { margin-top: 8px; font-size: 13px; }
+  details.table summary { cursor: pointer; color: var(--navy-mark); }
+  details.table table { border-collapse: collapse; margin-top: 6px; width: 100%; }
+  details.table th, details.table td { text-align: left; border-bottom: 1px solid var(--line); padding: 4px 6px; }
+  details.table td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  #tip {
+    position: fixed; pointer-events: none; background: #1f2430; color: #fff; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px; padding: 8px 10px; border-radius: 6px; max-width: 260px; opacity: 0; transition: opacity .1s; z-index: 50;
+  }
+  #tip b { display: block; margin-bottom: 2px; }
+
+  .flourish-slot .slot-box {
+    border: 2px dashed var(--line); border-radius: 8px; min-height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px; text-align: center; padding: 16px; background: #faf9f6;
+  }
+
+  .flourish-embed-card { padding: 10px; }
+
+  .section-header { padding-bottom: 0; }
+  .big-header { font-size: 32px; }
+
+  /* Synthesis + method */
+  .synth { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .synth .card h3 { font-size: 16px; }
+  .synth .card p { margin: 0; font-size: 15px; }
+  .method ol, .method ul { margin: 6px 0 0; padding-left: 20px; }
+  .method li { margin-bottom: 6px; }
+  .sources ol { font-size: 14px; padding-left: 22px; }
+  .sources li { margin-bottom: 6px; }
+  footer { margin-top: 40px; background: var(--navy); color: #c9d3e6; text-align: center; font-size: 14px; padding: 18px 0; border-top: 5px solid var(--red); }
+  footer a { color: #fff; }
+
+  @media (max-width: 960px) {
+    .board { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .synth { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    header.hero h1 { font-size: 27px; }
+    .rq { font-size: 16px; }
+    .board, .grid-3, .balance { grid-template-columns: 1fr; }
+    .topbar .links a:not(:first-child) { display: none; }
+    h2 { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../">Sawyer Walker</a>
+    <div class="links">
+      <a href="../">&larr; Portfolio</a>
+      <a href="../resume/">Resume</a>
+      <a href="#sources">Sources</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Capstone Project · M.S. Applied Data Science &amp; Analytics · Howard University</p>
+    <h1>AI Dependence &amp; the Trajectory of Data-Driven Business Decisions</h1>
+    <p class="rq"><b>Research question</b>How has the dependency on AI changed the trajectory for data-driven business decisions, and what role does it play in shaping how organizations rely on it?</p>
+    <p class="byline">By Sawyer R. Walker · Data current as of November 2026 · Work in progress</p>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- INTRODUCTION -->
+  <section id="intro">
+    <h2>Introduction</h2>
+    <div class="rule"></div>
+    <div class="card intro">
+      <p>Artificial intelligence has quickly moved from an experiment to an everyday part of how organizations analyze data and make decisions. This project dashboard examines how growing dependence on AI is changing the direction of data-driven decision making, and who benefits or faces challenges during this new age of technology as a result. This dashboard highlights four major areas of research regarding the job market and its effects on hiring, the use of AI in businesses and corporations, financial outcomes for these businesses, and the overall data literacy for the general population in the new age of AI. Each area is divided into three visualizations that present positive and negative outcomes from government, academic, and industry sources, allowing them to be compared side by side so that the findings reflect the full outcome of this research while eliminating bias.</p>
+    </div>
+  </section>
+
+  <!-- OVERVIEW -->
+  <section id="overview">
+    <h2>Overview of the Four Research Areas</h2>
+    <div class="rule"></div>
+    <p class="sub">This research is organized into four major areas: <b>(1)</b> the job market and its effects on hiring, <b>(2)</b> the use of AI in businesses and corporations, <b>(3)</b> financial outcomes for these businesses, and <b>(4)</b> data literacy in the new age of AI. Each area weighs positive and negative evidence side by side. Select an area to see its full breakdown.</p>
+    <div class="board">
+      <a class="card tile" href="#story">
+        <div class="tile-top">
+          <div><h3>1. Job market &amp; hiring</h3><p>Overall employment is stable, but entry-level hiring in AI-exposed jobs is falling.</p></div>
+        </div>
+      </a>
+      <a class="card tile" href="#story">
+        <div class="tile-top">
+          <div><h3>2. Business use of AI</h3><p>Adoption keeps rising, though most firms use AI in only a few functions.</p></div>
+        </div>
+      </a>
+      <a class="card tile" href="#story">
+        <div class="tile-top">
+          <div><h3>3. Financial outcomes</h3><p>Productivity gains are real, but enterprise-wide profit impact is still rare.</p></div>
+        </div>
+      </a>
+      <a class="card tile" href="#literacy">
+        <div class="tile-top">
+          <div><h3>4. Data &amp; AI literacy</h3><p>Use of AI is outpacing the training and skills needed to judge its output.</p></div>
+        </div>
+      </a>
+    </div>
+  </section>
+
+  <!-- RISE OF AI -->
+  <section id="rise">
+    <h2>The Rise of AI</h2>
+    <div class="rule"></div>
+    <div class="card intro">
+      <p>The release of ChatGPT in November 2022 marked a turning point, bringing generative AI out of research labs and into everyday life and work, and it was widely reported as one of the fastest-adopted consumer technologies in history. In 2023, the race accelerated as OpenAI released GPT-4, companies such as Google, Anthropic and Meta launched competing models, and Microsoft began building AI "copilots" directly into workplace software. By 2024, AI tools had become multimodal, able to work with text, images and audio, and businesses moved from testing chatbots to applying AI in areas like customer service, marketing and data analysis. In 2025, the focus shifted toward AI "agents" that can complete multi-step tasks on their own, and 88% of organizations reported using AI in at least one business function. Today, AI is no longer an experiment but part of how organizations analyze data and make decisions, setting the tone for the growing dependence this dashboard examines.</p>
+    </div>
+  </section>
+
+  <!-- FLOURISH DATA STORY -->
+  <section id="story">
+    <h2>Data Story: Seven Frames</h2>
+    <div class="rule"></div>
+    <p class="sub">Use the arrows to move through the seven frames of this research. Hover over or tap the charts for details and sources.</p>
+    <div class="card flourish-embed-card">
+      <div class="flourish-embed" data-src="story/3866500"><script src="https://public.flourish.studio/resources/embed.js"></script><noscript><img src="https://public.flourish.studio/story/3866500/thumbnail" width="100%" alt="Flourish data story: AI dependence and the trajectory of data-driven business decisions" /></noscript></div>
+    </div>
+  </section>
+
+  <!-- EXTENDED ANALYSIS -->
+  <section id="extended" class="section-header">
+    <h2 class="big-header">Extended Analysis</h2>
+    <div class="rule"></div>
+  </section>
+
+  <!-- 1. FUTURE JOB MARKET -->
+  <section id="future">
+    <div class="area-head"><div><h2>1. What the Job Market May Look Like in the Future</h2></div></div>
+    <p class="sub">Forecasts point to more jobs overall, but different ones: roles tied to AI and data grow, while routine office and service roles shrink.</p>
+    <div class="card chart"><p class="chart-title">Projected employment change by occupation, 2024–2034</p><p class="chart-sub">Percent change in jobs. Hover over a bar to see the number of jobs.</p><div class="keys"><span><i style="background:var(--navy-mark)"></i>Growth</span><span><i style="background:var(--red-mark)"></i>Decline</span><span><i style="background:#8f949e"></i>All jobs (benchmark)</span></div><div id="c-bls"></div><p class="explain"><b>What you're looking at:</b> Each bar is one occupation. Bars to the right of the center line are expected to grow, and bars to the left are expected to shrink. The gray bar is the average for all U.S. jobs (+3.1%), so anything longer than it is growing faster than the economy. The fastest-growing roles, like data scientists, build or use AI, while the shrinking roles involve routine tasks such as answering customer questions or processing paperwork, which AI tools can now handle.</p><p class="src">Source: U.S. Bureau of Labor Statistics, Employment Projections 2024–34.</p></div>
+    <p class="verdict"><b>Key takeaway:</b> The future job market is less about fewer jobs and more about different jobs. Workers with data and AI skills are positioned to benefit, while routine office and service roles face the most pressure to retrain.</p>
+  </section>
+
+  <!-- 2. AFFECTED DEMOGRAPHICS -->
+  <section id="demographics">
+    <div class="area-head"><div><h2>2. Affected Demographics: Who Bears the Costs of AI in the Economy</h2></div></div>
+    <p class="sub">AI's effects do not fall evenly. Gender and race shape who is exposed to automation and who holds the jobs AI is creating.</p>
+    <div class="card chart"><p class="chart-title">Women&rsquo;s share of workers</p><p class="chart-sub">Total workforce vs. AI-vulnerable jobs</p><div id="c-women"></div><p class="explain"><b>What you're looking at:</b> Women hold just under half of all U.S. jobs but more than 4 in 5 of the jobs most vulnerable to AI, such as administrative and clerical work. Women of color alone hold more than 30% of the 15 most vulnerable jobs.</p><p class="src">Source: National Partnership for Women &amp; Families (2026).</p></div>
+    <p class="verdict"><b>Key takeaway:</b> The costs of AI in the economy fall unevenly. Women, and especially women of color, hold most of the jobs AI is most likely to change, so access to training and fair hiring will shape who benefits from AI and who falls behind.</p>
+  </section>
+
+  <!-- 3. DATA LITERACY -->
+  <section id="literacy">
+    <div class="area-head"><div><h2>3. Data Literacy in the Age of AI</h2></div></div>
+    <p class="sub">As people lean on AI to analyze data, are they getting better or worse at understanding and questioning it? Expectations are rising faster than skills.</p>
+    <div class="card">
+        <h3>How AI reliance affects critical thinking</h3>
+        <p style="margin:0 0 10px;font-size:15px">A Microsoft Research and Carnegie Mellon survey of 319 knowledge workers (936 real tasks) found:</p>
+        <ul style="margin:0;padding-left:18px;font-size:15px">
+          <li style="margin-bottom:6px"><b>More confidence in AI</b> was linked to <b>less</b> critical thinking.</li>
+          <li style="margin-bottom:6px"><b>More confidence in one's own skills</b> was linked to <b>more</b> critical thinking.</li>
+          <li>Workers' effort shifts from analyzing information to <b>verifying</b> AI output.</li>
+        </ul>
+        <p style="margin:12px 0 0;font-size:13px;color:var(--muted)">Self-reported survey; shows association, not cause.</p>
+      </div>
+    <div style="margin-top:16px"><div class="card chart"><p class="chart-title">AI use vs. AI training at work</p><p class="chart-sub">Share of employees</p><div id="c-train"></div><p class="explain"><b>What you're looking at:</b> Almost everyone uses AI at work, but only a third were trained by their employer. Nearly half taught themselves, so many people rely on AI without formal guidance on when to trust or question it.</p><p class="src">Source: Study.com survey, January 2026.</p></div></div>
+    <p class="verdict"><b>Key takeaway:</b> Reliance on AI is growing faster than people's ability to question it. That is a risk for data-driven decisions, because a decision is only as good as the human judgment that checks the analysis.</p>
+  </section>
+
+    <!-- METHOD -->
+  <section id="method" class="method">
+    <h2>Methodology</h2>
+    <div class="rule"></div>
+    <div class="card">
+      <ul>
+        <li><b>Source mix:</b> evidence comes from government (Bureau of Labor Statistics, Census, Federal Reserve), academic (Stanford, Yale, MIT, Carnegie Mellon, University of Washington) and industry sources (McKinsey, PwC, WEF, DataCamp).</li>
+        <li><b>Both sides shown:</b> each finding was sorted as a positive finding or a concern before drawing conclusions, and each section ends with a key takeaway.</li>
+        <li><b>Conflicts of interest flagged:</b> consultancies and training vendors sell AI services, so their findings are paired with independent data.</li>
+        <li><b>Transparent sourcing:</b> every number is named with its source, listed in full below.</li>
+        <li><b>Known limits:</b> many figures are self-reported surveys; layoffs "citing" AI may reflect other causes; the Census changed its AI question in late 2025, so older and newer rates aren't directly comparable.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SOURCES -->
+  <section id="sources" class="sources">
+    <h2>Sources</h2>
+    <div class="rule"></div>
+    <ol>
+      <li>World Economic Forum (2025). <a href="https://www.weforum.org/press/2025/01/future-of-jobs-report-2025-78-million-new-job-opportunities-by-2030-but-urgent-upskilling-needed-to-prepare-workforces/">Future of Jobs Report 2025</a>.</li>
+      <li>Brynjolfsson, E., Chandar, B., &amp; Chen, R. (2026). <a href="https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/">Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of AI</a>. Stanford Digital Economy Lab (revised Aug. 2026).</li>
+      <li>Gimbel, M., Kinder, M., Kendall, J., &amp; Lee, M. (2025). <a href="https://budgetlab.yale.edu/research/evaluating-impact-ai-labor-market-current-state-affairs">Evaluating the Impact of AI on the Labor Market</a>. Yale Budget Lab &amp; Brookings.</li>
+      <li>Challenger, Gray &amp; Christmas (2026). <a href="https://www.challengergray.com/blog/">Job Cut Announcement Reports</a>, March–August 2026.</li>
+      <li>PwC (2026). <a href="https://www.pwc.com/gx/en/issues/artificial-intelligence/ai-jobs-barometer.html">2026 Global AI Jobs Barometer</a>.</li>
+      <li>McKinsey &amp; Company (2025). <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025">The State of AI in 2025: Agents, Innovation, and Transformation</a>.</li>
+      <li>McKinsey &amp; Company (2026). <a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai">The State of AI in 2026: On the Road to ROI</a>.</li>
+      <li>U.S. Census Bureau (2026). <a href="https://www.census.gov/library/stories/2026/05/ai-use-businesses.html">Large Firms With at Least 20 Employees Biggest AI Users</a> (Business Trends and Outlook Survey).</li>
+      <li>Buffington, C., Foster, L., Haltiwanger, J., &amp; Pande, A. (2026). <a href="https://www.census.gov/library/working-papers/2026/adrm/CES-WP-26-25.html">The Microstructure of AI Diffusion</a>. U.S. Census Bureau CES Working Paper 26-25.</li>
+      <li>Challapally, A., et al. (2025). The GenAI Divide: State of AI in Business 2025. MIT NANDA. <a href="https://www.computing.co.uk/news/2025/ai/mit-report-95pc-corporate-generative-ai-pilots-fail">Summary</a>.</li>
+      <li>Bick, A., Blandin, A., &amp; Deming, D. (2025). <a href="https://www.stlouisfed.org/on-the-economy/2025/feb/impact-generative-ai-work-productivity">The Impact of Generative AI on Work Productivity</a>. Federal Reserve Bank of St. Louis.</li>
+      <li>Lee, H.-P., et al. (2025). The Impact of Generative AI on Critical Thinking. Microsoft Research &amp; Carnegie Mellon University. <a href="https://campustechnology.com/articles/2025/02/21/study-generative-ai-could-inhibit-critical-thinking.aspx">Summary</a>.</li>
+      <li>DataCamp &amp; YouGov (2026). <a href="https://datacamp.com/blog/the-state-of-data-and-ai-literacy-in-2026-definitions-statistics-and-the-ai-skills-gap">The 2026 State of Data &amp; AI Literacy Report</a>.</li>
+      <li>U.S. Bureau of Labor Statistics (2025). <a href="https://www.bls.gov/emp/tables/occupations-largest-job-declines.htm">Employment Projections 2024–2034</a>; <a href="https://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm">AI, Information Technology, and Employment, 2024–34</a> (The Economics Daily, 2026).</li>
+      <li>World Economic Forum (2025). <a href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/in-full/3-skills-outlook/">Future of Jobs Report 2025: Skills Outlook</a>.</li>
+      <li>Goldman Sachs Research (2025). <a href="https://www.goldmansachs.com/insights/articles/how-will-ai-affect-the-global-workforce">How Will AI Affect the Global Workforce?</a></li>
+      <li>National Partnership for Women &amp; Families (2026). <a href="https://nationalpartnership.org/news_post/new-analysis-more-than-30-percent-of-workers-in-the-most-ai-vulnerable-jobs-are-women-of-color/">AI and Emerging Risks for Women Workers</a>.</li>
+      <li>Federal Reserve Bank of Philadelphia, citing the Richmond Fed AI Jobs Transition Framework. <a href="https://philadelphiafed.org/community-development/workforce-and-economic-development/which-workers-are-most-vulnerable-to-ai-disruption">Which Workers Are Most Vulnerable to Generative AI Disruption?</a></li>
+      <li>Pew Research Center (2023). <a href="https://www.pewresearch.org/social-trends/2023/07/26/exposure-of-workers-to-ai">Which U.S. Workers Are More Exposed to AI on Their Jobs?</a></li>
+      <li>Wilson, K., &amp; Caliskan, A. (2024). <a href="https://www.washington.edu/news/2024/10/31/ai-bias-resume-screening-race-gender/">AI tools show biases in ranking job applicants' names according to perceived race and gender</a>. University of Washington.</li>
+      <li>Federal Reserve Bank of New York (2026). <a href="https://www.newyorkfed.org/research/college-labor-market">The Labor Market for Recent College Graduates</a>.</li>
+      <li>Benjamin, R. (2019). <i>Race After Technology: Abolitionist Tools for the New Jim Code</i>. Polity.</li>
+      <li>Protiviti (2026). <a href="https://www.protiviti.com/sites/default/files/2026-11/lse-generational-surveyreport-bklt-1026-na-en-protiviti.pdf">Generational AI workforce survey report</a>.</li>
+      <li>Study.com (2026), via eWeek. <a href="https://www.eweek.com/news/survey-ai-workplace-training-gap/">Nearly 90% of Workers Are Using AI at Work, Mostly Without Employer Support</a>.</li>
+    </ol>
+  </section>
+
+</main>
+
+<footer>
+  Capstone project by Sawyer R. Walker · Howard University ·
+  <a href="../">Back to portfolio</a>
+</footer>
+
+<div id="tip" role="tooltip"></div>
+
+<script>
+(function () {
+  var NAVY = '#2b5c9e', RED = '#a8293d', GRID = '#ebe8e1', INK = '#1f2430', INK2 = '#4a4f5c', MUTED = '#767b87', SURF = '#fdfcfa';
+  var FONT = '-apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif';
+  var tip = document.getElementById('tip');
+
+  function showTip(e, title, body) {
+    tip.innerHTML = '<b>' + title + '</b>' + body;
+    tip.style.opacity = 1;
+    var x = e.clientX + 14, y = e.clientY + 14;
+    if (x + 270 > window.innerWidth) x = e.clientX - 270;
+    tip.style.left = x + 'px'; tip.style.top = y + 'px';
+  }
+  function hideTip() { tip.style.opacity = 0; }
+  function el(tag, attrs, text) {
+    var n = document.createElementNS('http://www.w3.org/2000/svg', tag);
+    for (var k in attrs) n.setAttribute(k, attrs[k]);
+    if (text !== undefined) n.textContent = text;
+    return n;
+  }
+  // Horizontal bar with 4px rounded end, square at baseline
+  function barPath(x, y, w, h) {
+    var r = Math.min(4, w / 2, h / 2);
+    if (w <= 0) return '';
+    return 'M' + x + ',' + y + 'H' + (x + w - r) + 'Q' + (x + w) + ',' + y + ' ' + (x + w) + ',' + (y + r) +
+           'V' + (y + h - r) + 'Q' + (x + w) + ',' + (y + h) + ' ' + (x + w - r) + ',' + (y + h) + 'H' + x + 'Z';
+  }
+
+  /* rows: [{label, value, color, display, tipTitle, tipBody}] ; groups optional */
+  var charts = [];
+  function hbar(id, rows, opts) { charts.push([id, rows, opts]); draw(id, rows, opts); }
+  function barPathL(x, y, w, h) {
+    var r = Math.min(4, w / 2, h / 2);
+    if (w <= 0) return '';
+    return 'M' + x + ',' + y + 'H' + (x - w + r) + 'Q' + (x - w) + ',' + y + ' ' + (x - w) + ',' + (y + r) +
+           'V' + (y + h - r) + 'Q' + (x - w) + ',' + (y + h) + ' ' + (x - w + r) + ',' + (y + h) + 'H' + x + 'Z';
+  }
+  function draw(id, rows, opts) {
+    var host = document.getElementById(id); if (!host) return;
+    host.innerHTML = '';
+    var avail = host.clientWidth || 520;
+    var W = Math.max(200, Math.min(opts.maxW || 560, avail));
+    var stack = W < 440;
+    var labelW = stack ? 0 : (opts.labelW || 190);
+    var barH = 20, gap = opts.gap || 14, padR = 64, top = 6, labelH = stack ? 20 : 0;
+    var min = opts.min || 0, max = opts.max, groupGap = opts.groupGap || 0;
+    var padL = min < 0 ? 44 : 0;
+    var ys = [], acc = top;
+    rows.forEach(function (r, i) {
+      if (i > 0 && groupGap && r.label) acc += groupGap;
+      if (stack && r.label) acc += labelH;
+      ys.push(acc); acc += barH + gap;
+    });
+    var H = acc + 18;
+    var svg = el('svg', { viewBox: '0 0 ' + W + ' ' + H, role: 'img', 'aria-label': opts.aria, style: 'max-width:' + W + 'px' });
+    var plotW = W - labelW - padR - padL;
+    function X(v) { return labelW + padL + ((v - min) / (max - min)) * plotW; }
+    var x0 = X(0);
+    ((stack && opts.ticksNarrow) || opts.ticks || []).forEach(function (t) {
+      var gx = X(t);
+      svg.appendChild(el('line', { x1: gx, x2: gx, y1: top - 2, y2: H - 18, stroke: GRID, 'stroke-width': 1 }));
+      svg.appendChild(el('text', { x: gx, y: H - 4, 'font-size': 11, fill: MUTED, 'text-anchor': (gx < 12 ? 'start' : 'middle'), 'font-family': FONT }, opts.tickFmt ? opts.tickFmt(t) : t));
+    });
+    svg.appendChild(el('line', { x1: x0, x2: x0, y1: top - 2, y2: H - 18, stroke: '#9c978c', 'stroke-width': 1 }));
+    rows.forEach(function (r, i) {
+      var y = ys[i];
+      var w = Math.abs(X(r.value) - x0);
+      if (r.label) {
+        svg.appendChild(stack
+          ? el('text', { x: 0, y: y - 5, 'font-size': 12.5, fill: INK2, 'font-family': FONT }, r.label)
+          : el('text', { x: labelW - 10, y: y + barH / 2 + 4, 'font-size': 12.5, fill: INK2, 'text-anchor': 'end', 'font-family': FONT }, r.label));
+      }
+      var g = el('g', { tabindex: 0, style: 'cursor:default;outline:none' });
+      g.appendChild(el('rect', { x: labelW, y: y - gap / 2, width: W - labelW, height: barH + gap, fill: 'transparent' }));
+      var neg = r.value < 0;
+      var bar = el('path', { d: neg ? barPathL(x0, y, w, barH) : barPath(x0, y, w, barH), fill: r.color });
+      g.appendChild(bar);
+      g.appendChild(el('text', { x: neg ? x0 - w - 6 : x0 + w + 6, y: y + barH / 2 + 4, 'font-size': 12.5, fill: INK, 'font-weight': 600, 'text-anchor': neg ? 'end' : 'start', 'font-family': FONT }, r.display));
+      function on(e) { bar.setAttribute('opacity', 0.82); showTip(e, r.tipTitle || r.label, r.tipBody || r.display); }
+      g.addEventListener('mousemove', on);
+      g.addEventListener('mouseleave', function () { bar.setAttribute('opacity', 1); hideTip(); });
+      g.addEventListener('focus', function () { var b = g.getBoundingClientRect(); on({ clientX: b.left + 40, clientY: b.top }); });
+      g.addEventListener('blur', function () { bar.setAttribute('opacity', 1); hideTip(); });
+      svg.appendChild(g);
+    });
+    host.appendChild(svg);
+  }
+  var rt;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { charts.forEach(function (c) { draw(c[0], c[1], c[2]); }); }, 150);
+  });
+
+  var GRAY = '#8f949e';
+  function occ(l, v, n, c) { return { label: l, value: v, color: c, display: (v > 0 ? '+' : '') + v + '%', tipBody: (v > 0 ? '+' : '') + v + '% (' + n + ' jobs) projected, 2024–2034.' }; }
+  hbar('c-bls', [
+    occ('Data scientists', 33.5, '+82,500', NAVY),
+    occ('Information security analysts', 28.5, '+52,100', NAVY),
+    occ('Operations research analysts', 21.5, '+24,100', NAVY),
+    occ('Software developers', 15.8, '+267,700', NAVY),
+    occ('All occupations (benchmark)', 3.1, '+5,211,800', GRAY),
+    occ('Secretaries and admin. assistants', -1.6, '−30,800', RED),
+    occ('Claims adjusters and examiners', -5.1, '−18,200', RED),
+    occ('Customer service representatives', -5.5, '−153,700', RED),
+    occ('Legal secretaries', -5.8, '−9,000', RED),
+    occ('Procurement clerks', -8.7, '−5,400', RED)
+  ], { min: -10, max: 40, maxW: 900, labelW: 230, gap: 10, ticks: [-10, 0, 10, 20, 30, 40], ticksNarrow: [-10, 0, 20, 40], tickFmt: function (t) { return (t > 0 ? '+' : '') + t + '%'; }, aria: 'Diverging bar chart of projected 2024 to 2034 employment change: data scientists +33.5%, information security analysts +28.5%, operations research analysts +21.5%, software developers +15.8%, all occupations +3.1%, secretaries -1.6%, claims adjusters -5.1%, customer service representatives -5.5%, legal secretaries -5.8%, procurement clerks -8.7%.' });
+
+
+  hbar('c-women', [
+    { label: 'Total U.S. workforce', value: 47, color: NAVY, display: '47%', tipBody: 'Women make up 47% of the U.S. workforce.' },
+    { label: 'AI-vulnerable jobs', value: 83, color: RED, display: '83%', tipBody: 'Women make up 83% of workers in AI-vulnerable occupations.' }
+  ], { maxW: 760, max: 100, labelW: 160, gap: 22, ticks: [0, 50, 100], tickFmt: function (t) { return t + '%'; }, aria: 'Bar chart: women are 47% of the workforce but 83% of workers in AI-vulnerable occupations.' });
+
+  hbar('c-train', [
+    { label: 'Use AI at work', value: 89, color: NAVY, display: '89%', tipBody: '89% of employees use AI at work.' },
+    { label: 'Self-taught', value: 46, color: RED, display: '46%', tipBody: '46% taught themselves to use AI.' },
+    { label: 'Employer-trained', value: 33, color: RED, display: '33%', tipBody: 'Only 33% received AI training from their employer.' }
+  ], { maxW: 760, max: 100, labelW: 140, ticks: [0, 25, 50, 75, 100], tickFmt: function (t) { return t + '%'; }, aria: 'Bar chart: 89% of employees use AI at work, 46% are self-taught, and 33% received employer training.' });
+
+
+
+
+
+
+
+
+})();
+</script>
+</body>
+</html>

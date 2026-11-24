@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sources | AI Dependence Capstone Dashboard | Sawyer Walker</title>
+<meta name="description" content="Full source list for Sawyer Walker's capstone dashboard on AI dependence and data-driven business decisions.">
+<style>
+  :root {
+    --navy: #14284b;        /* brand navy: header, headings */
+    --navy-mark: #2b5c9e;   /* chart navy (validated) */
+    --red: #7d1d2c;         /* brand dark red: accents */
+    --red-mark: #a8293d;    /* chart dark red (validated) */
+    --bg: #f5f3ee;
+    --card: #fdfcfa;
+    --ink: #1f2430;
+    --ink-2: #4a4f5c;
+    --muted: #767b87;
+    --line: #e3dfd6;
+    --grid: #ebe8e1;
+    --go: #2f8a57;          /* stoplight green */
+    --caution: #d9a21b;     /* stoplight amber */
+    --stop: #c9372c;        /* stoplight red */
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: Georgia, "Times New Roman", serif; line-height: 1.55; font-size: 16px;
+  }
+  a { color: var(--navy-mark); }
+  .wrap { max-width: 1120px; margin: 0 auto; padding: 0 22px; }
+
+  /* Top bar + header */
+  .topbar { background: var(--navy); }
+  .topbar .wrap { display: flex; justify-content: space-between; align-items: center; height: 52px; }
+  .topbar a { color: #e7ebf3; text-decoration: none; font-size: 14px; margin-right: 18px; }
+  .topbar a:hover { color: #fff; text-decoration: underline; }
+  .topbar .brand { font-weight: bold; color: #fff; }
+  header.hero { background: var(--navy); color: #fff; padding: 34px 0 40px; border-bottom: 5px solid var(--red); }
+  .eyebrow { text-transform: uppercase; letter-spacing: 2px; font-size: 13px; color: #c9d3e6; margin: 0 0 8px; }
+  header.hero h1 { font-size: 36px; line-height: 1.15; margin: 0 0 16px; max-width: 900px; }
+  .rq {
+    background: rgba(255,255,255,0.08); border-left: 4px solid #d2a3ab;
+    padding: 14px 18px; border-radius: 4px; max-width: 900px; font-size: 18px; margin: 0;
+  }
+  .rq b { display: block; font-size: 12px; letter-spacing: 1.5px; text-transform: uppercase; color: #c9d3e6; margin-bottom: 4px; }
+  .byline { margin: 16px 0 0; color: #c9d3e6; font-size: 14px; }
+
+  section { padding: 36px 0 8px; }
+  h2 { color: var(--navy); font-size: 26px; margin: 0 0 4px; }
+  h2 + .rule { width: 56px; height: 3px; background: var(--red); margin: 0 0 18px; }
+  h3 { color: var(--navy); font-size: 18px; margin: 0 0 6px; }
+  .sub { color: var(--ink-2); margin: 0 0 18px; max-width: 820px; }
+  .card { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 20px 22px; }
+
+  .intro p { margin: 0; font-size: 17px; line-height: 1.7; max-width: 900px; }
+
+  /* Stoplight */
+  .light { display: inline-flex; flex-direction: column; gap: 5px; background: #23262d; padding: 7px 6px; border-radius: 14px; flex-shrink: 0; }
+  .light span { width: 18px; height: 18px; border-radius: 50%; background: #3d4048; }
+  .light.go span:nth-child(3) { background: var(--go); box-shadow: 0 0 8px var(--go); }
+  .light.caution span:nth-child(2) { background: var(--caution); box-shadow: 0 0 8px var(--caution); }
+  .light.stop span:nth-child(1) { background: var(--stop); box-shadow: 0 0 8px var(--stop); }
+  .badge { display: inline-block; font-size: 12px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; border: 1px solid; }
+  .badge.go { color: #1f6b41; border-color: #1f6b41; }
+  .badge.caution { color: #8a6304; border-color: #8a6304; }
+  .badge.stop { color: #a3271e; border-color: #a3271e; }
+  .badge.positive { color: var(--navy-mark); border-color: var(--navy-mark); }
+  .badge.concern { color: var(--red); border-color: var(--red); }
+
+  .board { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .tile { display: flex; flex-direction: column; gap: 14px; text-decoration: none; color: inherit; }
+  .tile-top { display: flex; gap: 14px; align-items: flex-start; }
+  .mini { border-top: 1px solid var(--line); padding-top: 12px; margin-top: auto; }
+  .mini-title { font-size: 12.5px; font-weight: bold; color: var(--navy); margin: 0 0 6px; }
+  .tile:hover { border-color: var(--navy-mark); }
+  .tile h3 { font-size: 16px; margin: 4px 0 6px; }
+  .tile p { margin: 0; font-size: 14px; color: var(--ink-2); }
+  .legend-row { display: flex; flex-wrap: wrap; gap: 18px; margin: 16px 0 0; font-size: 14px; color: var(--ink-2); }
+  .legend-row .item { display: flex; align-items: center; gap: 8px; }
+  .dot { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+
+  /* Area sections */
+  .area-head { display: flex; gap: 16px; align-items: center; margin-bottom: 14px; }
+  .area-head h2 { margin: 0; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-top: 16px; }
+  .stat .label { font-size: 13px; color: var(--ink-2); }
+  .stat .value { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; font-weight: 600; font-size: 30px; color: var(--ink); line-height: 1.2; margin: 4px 0; }
+  .stat .note { font-size: 12.5px; color: var(--muted); }
+  .stat .tag { font-size: 12px; margin-bottom: 4px; }
+
+  .balance { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+  .balance .card { padding: 16px 18px; }
+  .balance h4 { margin: 0 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; }
+  .balance ul { margin: 0; padding-left: 18px; font-size: 14.5px; }
+  .balance li { margin-bottom: 6px; }
+  .balance .pos h4 { color: var(--navy-mark); }
+  .balance .neg h4 { color: var(--red); }
+  .verdict { margin-top: 14px; font-size: 15px; background: #f0ede6; border-left: 4px solid var(--red); padding: 10px 14px; border-radius: 4px; }
+
+  /* Charts */
+  .chart-title { font-weight: bold; color: var(--navy); margin: 0 0 2px; font-size: 15.5px; }
+  .chart-sub { font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+  .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart .explain { font-size: 14px; color: var(--ink-2); margin: 10px 0 0; line-height: 1.55; }
+  .chart .src { font-size: 12px; color: var(--muted); margin-top: 6px; }
+  .keys { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin: 0 0 8px; flex-wrap: wrap; }
+  .keys span { display: inline-flex; align-items: center; gap: 6px; }
+  .keys i { width: 12px; height: 12px; border-radius: 3px; display: inline-block; }
+  details.table { margin-top: 8px; font-size: 13px; }
+  details.table summary { cursor: pointer; color: var(--navy-mark); }
+  details.table table { border-collapse: collapse; margin-top: 6px; width: 100%; }
+  details.table th, details.table td { text-align: left; border-bottom: 1px solid var(--line); padding: 4px 6px; }
+  details.table td.n { text-align: right; font-variant-numeric: tabular-nums; }
+  #tip {
+    position: fixed; pointer-events: none; background: #1f2430; color: #fff; font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 13px; padding: 8px 10px; border-radius: 6px; max-width: 260px; opacity: 0; transition: opacity .1s; z-index: 50;
+  }
+  #tip b { display: block; margin-bottom: 2px; }
+
+  .flourish-slot .slot-box {
+    border: 2px dashed var(--line); border-radius: 8px; min-height: 180px;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px; text-align: center; padding: 16px; background: #faf9f6;
+  }
+
+  .flourish-embed-card { padding: 10px; }
+
+  .section-header { padding-bottom: 0; }
+  .big-header { font-size: 32px; }
+
+  /* Synthesis + method */
+  .synth { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .synth .card h3 { font-size: 16px; }
+  .synth .card p { margin: 0; font-size: 15px; }
+  .method ol, .method ul { margin: 6px 0 0; padding-left: 20px; }
+  .method li { margin-bottom: 6px; }
+  .sources ol { font-size: 14px; padding-left: 22px; }
+  .sources li { margin-bottom: 6px; }
+  .src-btn { display:inline-block; background: var(--navy); color:#fff; text-decoration:none; padding:10px 18px; border-radius:6px; font-size:15px; border-bottom:3px solid var(--red); }
+  .src-btn:hover { background:#1d3766; }
+  footer { margin-top: 40px; background: var(--navy); color: #c9d3e6; text-align: center; font-size: 14px; padding: 18px 0; border-top: 5px solid var(--red); }
+  footer a { color: #fff; }
+
+  @media (max-width: 960px) {
+    .board { grid-template-columns: repeat(2, 1fr); }
+    .grid-2, .synth { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 620px) {
+    header.hero h1 { font-size: 27px; }
+    .rq { font-size: 16px; }
+    .board, .grid-3, .balance { grid-template-columns: 1fr; }
+    .topbar .links a:not(:first-child) { display: none; }
+    h2 { font-size: 23px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="wrap">
+    <a class="brand" href="../">Sawyer Walker</a>
+    <div class="links">
+      <a href="../">&larr; Portfolio</a>
+      <a href="../resume/">Resume</a>
+      <a href="sources.html">Sources</a>
+    </div>
+  </div>
+</div>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Capstone Project · M.S. Applied Data Science &amp; Analytics · Howard University</p>
+    <h1>Sources</h1>
+    <p class="byline">Every figure in the dashboard <i>AI Dependence &amp; the Trajectory of Data-Driven Business Decisions</i> comes from one of the sources below.</p>
+  </div>
+</header>
+<main class="wrap">
+  <section class="sources">
+    <p style="margin:0 0 18px"><a href="./">&larr; Back to the dashboard</a></p>
+    <div class="card">
+    <ol>
+      <li>World Economic Forum (2025). <a target="_blank" rel="noopener" href="https://www.weforum.org/press/2025/01/future-of-jobs-report-2025-78-million-new-job-opportunities-by-2030-but-urgent-upskilling-needed-to-prepare-workforces/">Future of Jobs Report 2025</a>.</li>
+      <li>Brynjolfsson, E., Chandar, B., &amp; Chen, R. (2026). <a target="_blank" rel="noopener" href="https://digitaleconomy.stanford.edu/publication/canaries-in-the-coal-mine-six-facts-about-the-recent-employment-effects-of-artificial-intelligence/">Canaries in the Coal Mine? Six Facts about the Recent Employment Effects of AI</a>. Stanford Digital Economy Lab (revised Aug. 2026).</li>
+      <li>Gimbel, M., Kinder, M., Kendall, J., &amp; Lee, M. (2025). <a target="_blank" rel="noopener" href="https://budgetlab.yale.edu/research/evaluating-impact-ai-labor-market-current-state-affairs">Evaluating the Impact of AI on the Labor Market</a>. Yale Budget Lab &amp; Brookings.</li>
+      <li>Challenger, Gray &amp; Christmas (2026). <a target="_blank" rel="noopener" href="https://www.challengergray.com/blog/">Job Cut Announcement Reports</a>, March–August 2026.</li>
+      <li>PwC (2026). <a target="_blank" rel="noopener" href="https://www.pwc.com/gx/en/issues/artificial-intelligence/ai-jobs-barometer.html">2026 Global AI Jobs Barometer</a>.</li>
+      <li>McKinsey &amp; Company (2025). <a target="_blank" rel="noopener" href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai-2025">The State of AI in 2025: Agents, Innovation, and Transformation</a>.</li>
+      <li>McKinsey &amp; Company (2026). <a target="_blank" rel="noopener" href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai">The State of AI in 2026: On the Road to ROI</a>.</li>
+      <li>U.S. Census Bureau (2026). <a target="_blank" rel="noopener" href="https://www.census.gov/library/stories/2026/05/ai-use-businesses.html">Large Firms With at Least 20 Employees Biggest AI Users</a> (Business Trends and Outlook Survey).</li>
+      <li>Buffington, C., Foster, L., Haltiwanger, J., &amp; Pande, A. (2026). <a target="_blank" rel="noopener" href="https://www.census.gov/library/working-papers/2026/adrm/CES-WP-26-25.html">The Microstructure of AI Diffusion</a>. U.S. Census Bureau CES Working Paper 26-25.</li>
+      <li>Challapally, A., et al. (2025). The GenAI Divide: State of AI in Business 2025. MIT NANDA. <a target="_blank" rel="noopener" href="https://www.computing.co.uk/news/2025/ai/mit-report-95pc-corporate-generative-ai-pilots-fail">Summary</a>.</li>
+      <li>Bick, A., Blandin, A., &amp; Deming, D. (2025). <a target="_blank" rel="noopener" href="https://www.stlouisfed.org/on-the-economy/2025/feb/impact-generative-ai-work-productivity">The Impact of Generative AI on Work Productivity</a>. Federal Reserve Bank of St. Louis.</li>
+      <li>Lee, H.-P., et al. (2025). The Impact of Generative AI on Critical Thinking. Microsoft Research &amp; Carnegie Mellon University. <a target="_blank" rel="noopener" href="https://campustechnology.com/articles/2025/02/21/study-generative-ai-could-inhibit-critical-thinking.aspx">Summary</a>.</li>
+      <li>DataCamp &amp; YouGov (2026). <a target="_blank" rel="noopener" href="https://datacamp.com/blog/the-state-of-data-and-ai-literacy-in-2026-definitions-statistics-and-the-ai-skills-gap">The 2026 State of Data &amp; AI Literacy Report</a>.</li>
+      <li>U.S. Bureau of Labor Statistics (2025). <a target="_blank" rel="noopener" href="https://www.bls.gov/emp/tables/occupations-largest-job-declines.htm">Employment Projections 2024–2034</a>; <a target="_blank" rel="noopener" href="https://www.bls.gov/opub/ted/2026/artificial-intelligence-information-technology-and-employment-2024-34.htm">AI, Information Technology, and Employment, 2024–34</a> (The Economics Daily, 2026).</li>
+      <li>World Economic Forum (2025). <a target="_blank" rel="noopener" href="https://www.weforum.org/publications/the-future-of-jobs-report-2025/in-full/3-skills-outlook/">Future of Jobs Report 2025: Skills Outlook</a>.</li>
+      <li>Goldman Sachs Research (2025). <a target="_blank" rel="noopener" href="https://www.goldmansachs.com/insights/articles/how-will-ai-affect-the-global-workforce">How Will AI Affect the Global Workforce?</a></li>
+      <li>National Partnership for Women &amp; Families (2026). <a target="_blank" rel="noopener" href="https://nationalpartnership.org/news_post/new-analysis-more-than-30-percent-of-workers-in-the-most-ai-vulnerable-jobs-are-women-of-color/">AI and Emerging Risks for Women Workers</a>.</li>
+      <li>Federal Reserve Bank of Philadelphia, citing the Richmond Fed AI Jobs Transition Framework. <a target="_blank" rel="noopener" href="https://philadelphiafed.org/community-development/workforce-and-economic-development/which-workers-are-most-vulnerable-to-ai-disruption">Which Workers Are Most Vulnerable to Generative AI Disruption?</a></li>
+      <li>Pew Research Center (2023). <a target="_blank" rel="noopener" href="https://www.pewresearch.org/social-trends/2023/07/26/exposure-of-workers-to-ai">Which U.S. Workers Are More Exposed to AI on Their Jobs?</a></li>
+      <li>Wilson, K., &amp; Caliskan, A. (2024). <a target="_blank" rel="noopener" href="https://www.washington.edu/news/2024/10/31/ai-bias-resume-screening-race-gender/">AI tools show biases in ranking job applicants' names according to perceived race and gender</a>. University of Washington.</li>
+      <li>Federal Reserve Bank of New York (2026). <a target="_blank" rel="noopener" href="https://www.newyorkfed.org/research/college-labor-market">The Labor Market for Recent College Graduates</a>.</li>
+      <li>Benjamin, R. (2019). <i>Race After Technology: Abolitionist Tools for the New Jim Code</i>. Polity.</li>
+      <li>Protiviti (2026). <a target="_blank" rel="noopener" href="https://www.protiviti.com/sites/default/files/2026-11/lse-generational-surveyreport-bklt-1026-na-en-protiviti.pdf">Generational AI workforce survey report</a>.</li>
+      <li>Study.com (2026), via eWeek. <a target="_blank" rel="noopener" href="https://www.eweek.com/news/survey-ai-workplace-training-gap/">Nearly 90% of Workers Are Using AI at Work, Mostly Without Employer Support</a>.</li>
+    </ol>
+    </div>
+  </section>
+</main>
+<footer>
+  Capstone project by Sawyer R. Walker · Howard University ·
+  <a href="../">Back to portfolio</a>
+</footer>
+</body>
+</html>
